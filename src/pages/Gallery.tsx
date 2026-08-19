@@ -6,29 +6,33 @@ import { Loader } from '../ui/Loader';
 import { GlassCard } from '../ui/GlassCard';
 
 const fallbackGallery = [
-  { id: 1, title: 'Strength Training Floor', description: 'High-performance strength training zone.', image_url: 'facilities_gym', category: 'Equipment' },
-  { id: 2, title: 'Cardio Zone Overhead', description: 'Biometric cardio area.', image_url: 'facilities_cardio', category: 'Equipment' },
-  { id: 3, title: 'Ice Bath', description: 'Premium cold plunge therapy designed to reduce inflammation, accelerate muscle recovery, improve circulation, and enhance athletic performance.', image_url: 'facilities_recovery', category: 'Recovery' },
-  { id: 4, title: 'Steam Bath', description: 'Relax and recover in our premium steam bath designed to improve circulation, reduce muscle tension, detoxify the body, and enhance post-workout recovery.', image_url: 'facilities_steam', category: 'Recovery' },
-  { id: 5, title: 'Dynamic Yoga Session', description: 'Guided mobility and yoga studio.', image_url: 'gallery_1', category: 'Classes' },
-  { id: 6, title: 'Premium Dumbbell Array', description: 'Heavy-duty dumbbell racks.', image_url: 'gallery_2', category: 'Equipment' }
+  { id: 11, title: 'Therapeutic Steam Bath', description: 'Separate luxury steam bath suite for recovery and relaxation.', image_url: 'facilities_steam', category: 'Recovery' },
+  { id: 12, title: 'Contrast Therapy Ice Bath', description: 'Separate professional ice bath plunge for muscle recovery.', image_url: 'facilities_recovery', category: 'Recovery' },
+  { id: 13, title: 'General Fitness Training Floor', description: 'Real gym layout with cardio and weight zones.', image_url: 'gallery_1', category: 'Training' },
+  { id: 14, title: 'Strength Training Facility', description: 'Premium training machinery and tools.', image_url: 'gallery_2', category: 'Equipment' }
 ];
 
 export const Gallery: React.FC = () => {
   const { data: items, loading } = useFetch('/gallery', fallbackGallery);
   const [filter, setFilter] = useState<string>('All');
 
-  const categories = ['All', 'Equipment', 'Recovery', 'Classes'];
+  const categories = ['All', 'Equipment', 'Training', 'Recovery'];
 
-  const filteredItems = filter === 'All'
+  const filteredItems = (filter === 'All'
     ? items
-    : items.filter(item => item.category === filter);
+    : items.filter(item => item.category === filter)
+  ).filter(item => 
+    !item.image_url.startsWith('branch1_') && 
+    !item.image_url.startsWith('branch2_') && 
+    !item.image_url.includes('/branch1/') && 
+    !item.image_url.includes('/branch2/')
+  );
 
   return (
     <>
       <SEO 
         title="Gallery" 
-        description="Browse photos of PML GYM's luxury training setups, yoga studios, and recovery contrast facilities."
+        description="Browse photos of PML GYM's luxury training setups, equipment zones, and recovery contrast facilities."
         canonicalPath="/gallery"
       />
 
@@ -77,7 +81,11 @@ export const Gallery: React.FC = () => {
               gap: '24px'
             }}>
               {filteredItems.map((item) => {
-                const imgSource = imageMap[item.image_url] || imageMap['facilities_gym'];
+                const imgSource = item.image_url.startsWith('http')
+                  ? item.image_url
+                  : (item.image_url.startsWith('/') 
+                      ? 'http://localhost:5000' + item.image_url 
+                      : (imageMap[item.image_url] || imageMap['facilities_gym']));
                 return (
                   <GlassCard key={item.id} hoverEffect={true} style={{ padding: '0px', overflow: 'hidden', height: '280px' }}>
                     <img 

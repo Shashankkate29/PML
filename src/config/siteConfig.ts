@@ -12,8 +12,6 @@ export interface SiteConfig {
   socialLinks: {
     instagram: string;
     facebook: string;
-    twitter: string;
-    youtube: string;
   };
   seoDefaults: {
     title: string;
@@ -38,21 +36,19 @@ export const siteConfig: SiteConfig = {
   themeColor: '#C5A880', // Premium Gold/Bronze accent
   themeColorSecondary: '#111111', // Deep Luxury Black
   contact: {
-    phone: '+91 91307 65750, +91 86685 23713, +91 95796 98009',
+    phone: '+91 91307 65750, +91 86685 23713, +91 95796 80009',
     email: 'pmlfitnessandhelthclub7413@gmail.com',
-    address: 'Paranda Road, Gadegaon Road, Barshi – 413401, Solapur District, Maharashtra, India',
-    operatingHours: 'Open 7 Days a Week | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM'
+    address: 'Paranda Road, Gadegaon Road, Barshi – 413401, Maharashtra',
+    operatingHours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM'
   },
   socialLinks: {
     instagram: 'https://www.instagram.com/pml_fitness_and_health_club?igsh=MTUzdXlhczhlemtlZw==',
-    facebook: 'https://www.facebook.com/watch/?v=611387358295310',
-    twitter: 'https://twitter.com/pmlgym',
-    youtube: 'https://youtube.com/pmlgym'
+    facebook: 'https://www.facebook.com/watch/?v=611387358295310'
   },
   seoDefaults: {
-    title: 'PML GYM | Premium Fitness & Recovery Labs',
-    description: 'Experience PML GYM, a state-of-the-art luxury fitness arena combining top-tier performance equipment with science-backed Recovery Labs.',
-    keywords: ['luxury gym', 'fitness club', 'recovery zone', 'ice bath', 'infrared sauna', 'personal training', 'barshi gym', 'solapur gym'],
+    title: 'PML GYM | Premium Fitness & Recovery',
+    description: 'Experience PML GYM, a premier fitness destination in Barshi, offering high-performance strength training, CrossFit, group classes, and dedicated recovery facilities.',
+    keywords: ['pml gym', 'fitness club', 'recovery zone', 'ice bath', 'steam bath', 'personal training', 'barshi gym', 'solapur gym'],
     siteUrl: 'https://pmlgym.com',
     ogImage: 'pml_logo'
   },

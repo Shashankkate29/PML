@@ -4,9 +4,8 @@ import { images } from '../assets/config/images';
 
 export const RecoverySection: React.FC = () => {
   const recoveryLabs = [
-    { name: 'Contrast Therapy Cold Plunge', desc: 'Sleek stainless steel tubs maintained at 4-6°C to flush metabolic wastes and accelerate muscle repair.' },
-    { name: 'Infrared Wellness Sauna', desc: 'Deep electromagnetic heat waves penetrating cellular levels to trigger detoxification, soothe soreness, and boost vascular flow.' },
-    { name: 'NormaTec Compression', desc: 'Pneumatic compression sleeves utilizing dynamic pulses to push lymphatic fluids and minimize stiffness.' }
+    { name: 'Cold Plunge Ice Bath', desc: 'Cold-water contrast recovery designed to help refresh the body and support post-workout muscle soreness reduction.' },
+    { name: 'Relaxing Steam Room', desc: 'Dedicated warm steam room designed to promote circulation, reduce muscle tension, and enhance relaxation.' }
   ];
 
   return (
@@ -21,7 +20,7 @@ export const RecoverySection: React.FC = () => {
             </span>
             <h2 style={{ fontSize: '2.2rem' }}>Train Hard. Recover Smarter.</h2>
             <p style={{ lineHeight: '1.6' }}>
-              True physical progression does not end at the lifting platform. Our state-of-the-art Recovery Labs utilize clinically validated contrast therapies and localized compression tools to speed up healing times and maximize longevity.
+              True physical progression does not end at the lifting platform. Our recovery amenities utilize contrast heat and cold options (Steam & Ice Bath) to speed up healing times and maximize post-workout recovery.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '10px' }}>
               {recoveryLabs.map((lab, i) => (
@@ -35,8 +34,8 @@ export const RecoverySection: React.FC = () => {
               ))}
             </div>
             <div style={{ marginTop: '10px' }}>
-              <NavLink to="/recovery" className="btn-primary">
-                Explore Recovery Lab
+              <NavLink to="/recovery-zone" className="btn-primary">
+                Explore Recovery Zone
               </NavLink>
             </div>
           </div>

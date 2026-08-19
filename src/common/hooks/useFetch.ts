@@ -2,14 +2,54 @@ import { useState, useEffect } from 'react';
 
 const API_BASE_URL = 'http://localhost:5000/api/v1';
 
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+// In-memory cache for API requests
+const fetchCache = new Map<string, CacheEntry<any>>();
+const CACHE_DURATION_MS = 30000; // 30 seconds cache duration
+
 export function useFetch<T>(endpoint: string, fallbackData: T) {
-  const [data, setData] = useState<T>(fallbackData);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<T>(() => {
+    if (endpoint && fetchCache.has(endpoint)) {
+      return fetchCache.get(endpoint)!.data;
+    }
+    return fallbackData;
+  });
+
+  const [loading, setLoading] = useState<boolean>(() => {
+    if (!endpoint) return false;
+    return !fetchCache.has(endpoint);
+  });
+
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!endpoint) {
+      setLoading(false);
+      return;
+    }
+
     let active = true;
-    setLoading(true);
+    const now = Date.now();
+    const cached = fetchCache.get(endpoint);
+
+    // If cached data exists and is fresh (within CACHE_DURATION_MS), use it and skip fetch
+    if (cached && (now - cached.timestamp < CACHE_DURATION_MS)) {
+      setData(cached.data);
+      setLoading(false);
+      return;
+    }
+
+    // Stale-While-Revalidate (SWR): immediately use stale cache data if available
+    if (cached) {
+      setData(cached.data);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
 
     const fetchData = async () => {
       try {
@@ -19,7 +59,9 @@ export function useFetch<T>(endpoint: string, fallbackData: T) {
         }
         const json = await response.json();
         if (active && json.success) {
+          fetchCache.set(endpoint, { data: json.data, timestamp: Date.now() });
           setData(json.data);
+          setError(null);
         } else if (active) {
           throw new Error(json.error || 'Request failed');
         }
@@ -27,7 +69,9 @@ export function useFetch<T>(endpoint: string, fallbackData: T) {
         console.warn(`[useFetch] Failed to fetch from ${endpoint}, reverting to fallback data:`, err.message);
         if (active) {
           setError(err.message);
-          setData(fallbackData);
+          if (!cached) {
+            setData(fallbackData);
+          }
         }
       } finally {
         if (active) {

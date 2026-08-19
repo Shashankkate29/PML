@@ -15,9 +15,15 @@ class BranchController {
   async getBranch(req, res, next) {
     try {
       const { id } = req.params;
-      const branch = await branchService.getBranchById(id);
+      let branch;
+      if (isNaN(Number(id))) {
+        branch = await branchService.getBranchBySlug(id);
+      } else {
+        branch = await branchService.getBranchById(parseInt(id, 10));
+      }
+      
       if (!branch) {
-        throw new ApiError(404, `Branch with ID ${id} not found`);
+        throw new ApiError(404, `Branch with identifier '${id}' not found`);
       }
       return successResponse(res, branch, 'Branch retrieved successfully');
     } catch (error) {

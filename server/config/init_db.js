@@ -28,19 +28,27 @@ async function initDatabase() {
 
     // 2. Create Tables
     console.log('[InitDB] Creating tables...');
+    await connection.query('DROP TABLE IF EXISTS branch_gallery');
+    await connection.query('DROP TABLE IF EXISTS branch_facilities');
     await connection.query('DROP TABLE IF EXISTS contact_messages');
     await connection.query('DROP TABLE IF EXISTS gallery');
+    await connection.query('DROP TABLE IF EXISTS branches');
     
     // Branches
     await connection.query(`
       CREATE TABLE IF NOT EXISTS branches (
         id INT AUTO_INCREMENT PRIMARY KEY,
+        branch_number INT NOT NULL,
         name VARCHAR(100) NOT NULL,
+        short_name VARCHAR(50) NOT NULL,
+        slug VARCHAR(50) UNIQUE DEFAULT NULL,
         address VARCHAR(255) NOT NULL,
         phone VARCHAR(20) NOT NULL,
         email VARCHAR(100) NOT NULL,
         operating_hours VARCHAR(100) NOT NULL,
         image_url VARCHAR(255) NOT NULL,
+        description TEXT DEFAULT NULL,
+        map_url VARCHAR(500) DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         INDEX idx_branch_name (name)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -115,6 +123,28 @@ async function initDatabase() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
+    // Branch Facilities
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS branch_facilities (
+        branch_id INT NOT NULL,
+        facility_id INT NOT NULL,
+        PRIMARY KEY (branch_id, facility_id),
+        FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE,
+        FOREIGN KEY (facility_id) REFERENCES facilities(id) ON DELETE CASCADE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
+    // Branch Gallery
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS branch_gallery (
+        branch_id INT NOT NULL,
+        gallery_id INT NOT NULL,
+        PRIMARY KEY (branch_id, gallery_id),
+        FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE,
+        FOREIGN KEY (gallery_id) REFERENCES gallery(id) ON DELETE CASCADE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
     // Contact Messages
     await connection.query(`
       CREATE TABLE IF NOT EXISTS contact_messages (
@@ -135,6 +165,8 @@ async function initDatabase() {
     // 3. Seed Data
     console.log('[InitDB] Cleaning existing demo data for clean seeding...');
     await connection.query('SET FOREIGN_KEY_CHECKS = 0');
+    await connection.query('TRUNCATE TABLE branch_gallery');
+    await connection.query('TRUNCATE TABLE branch_facilities');
     await connection.query('TRUNCATE TABLE branches');
     await connection.query('TRUNCATE TABLE facilities');
     await connection.query('TRUNCATE TABLE memberships');
@@ -147,42 +179,118 @@ async function initDatabase() {
     console.log('[InitDB] Seeding branches...');
     const branches = [
       [
+        1,
         'PML GYM – Barshi Branch',
-        'Paranda Road, Gadegaon Road, Barshi – 413401, Solapur District, Maharashtra, India',
+        'Barshi',
+        'barshi',
+        'Paranda Road, Gadegaon Road, Barshi – 413401, Maharashtra',
         '+91 91307 65750',
         'pmlfitnessandhelthclub7413@gmail.com',
         'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM',
-        'facilities_gym'
+        'branch1_photo_2',
+        'PML GYM Barshi — Perfect Management Longtime is our premier flagship fitness facility. Fully equipped for heavy performance strength training, professional cardiovascular conditioning, and signature thermal contrast therapy protocols (Steam & Ice Bath).',
+        null
       ],
       [
+        2,
         'PML GYM – Shivaji Nagar Branch',
-        'College Road, Opposite Bank of Maharashtra, Near Shri Shivaji Mahavidyalaya, Shivaji Nagar, Barshi, Solapur District, Maharashtra, India',
+        'Shivaji Nagar',
+        'shivaji-nagar',
+        'Shri Shivaji Mahavidyalaya College Road, opposite Bank of Maharashtra, Shivaji Nagar, Barshi, Maharashtra',
         '+91 86685 23713',
         'pmlfitnessandhelthclub7413@gmail.com',
         'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM',
-        'facilities_cardio'
+        'branch2_photo_1',
+        'PML GYM Shivaji Nagar Branch — Perfect Management Longtime delivers a dedicated environment for targeted athletic conditioning, cardio workouts, and personalized fitness coaching metrics.',
+        null
       ]
     ];
     for (const branch of branches) {
-      await connection.query('INSERT INTO branches (name, address, phone, email, operating_hours, image_url) VALUES (?, ?, ?, ?, ?, ?)', branch);
+      await connection.query('INSERT INTO branches (branch_number, name, short_name, slug, address, phone, email, operating_hours, image_url, description, map_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', branch);
     }
 
     // Seed Facilities
     console.log('[InitDB] Seeding facilities...');
     const facilities = [
-      ['Weight Training', 'Dedicated high-performance strength zone with heavy dumbbells, specialized plates, lifting platforms, and pin-selected selectorized machines.', 'facilities_gym', 'General'],
-      ['CrossFit', 'Functional conditioning space featuring power cages, gymnastics rings, air bikes, rowing machines, and sled tracks.', 'facilities_cardio', 'General'],
-      ['Yoga', 'Tranquil ambient-lit studio space hosting Vinyasa, Hatha, and alignment-focused guided sessions.', 'gallery_1', 'General'],
-      ['Zumba', 'Energetic cardio-dance classes in our premium sound-equipped aerobics studio.', 'facilities_zumba', 'General'],
-      ['Personal Training', '1-on-1 private coaching programs backed by biometric assessments and tailored progressive loading.', 'trainer_1', 'General'],
-      ['Ladies Trainer', 'Dedicated female coaching staff providing comfortable, focused strength and lifestyle guidance.', 'trainer_2', 'General'],
-      ['Nutrition Guidance', 'Professional dietary planning, macro breakdown targets, and calorie tracking structures.', 'facilities_nutrition', 'General'],
-      ['Fitness Kitchen', 'Nutritious meal prep prep-packs, premium protein shakes, and performance recovery food options.', 'facilities_kitchen', 'General'],
-      ['Steam Bath', 'Relax and recover in our premium steam bath designed to improve circulation, reduce muscle tension, detoxify the body, and enhance post-workout recovery.', 'facilities_steam', 'Recovery'],
-      ['Ice Bath', 'Cold plunge contrast tubs maintained at optimal sub-10°C temperatures to accelerate muscle recovery and reduce inflammation.', 'facilities_recovery', 'Recovery']
+      ['Weight Training', 'Dedicated strength-training area equipped with plate-loaded stations, selectorized machines, and free weights.', 'gym_photo_2', 'General'],
+      ['Cardio Training', 'Equipped with professional treadmills, elliptical trainers, and stationary bikes for cardiovascular conditioning.', 'gym_photo_1', 'General'],
+      ['Steam Bath', 'Dedicated steam-bath experience for muscle relaxation and post-workout recovery.', 'facilities_steam', 'Recovery'],
+      ['Ice Bath', 'Cold-water recovery plunge designed to support post-workout muscle relief and circulation.', 'facilities_recovery', 'Recovery']
     ];
     for (const facility of facilities) {
       await connection.query('INSERT INTO facilities (name, description, image_url, category) VALUES (?, ?, ?, ?)', facility);
+    }
+
+    // Seed Branch Facilities
+    console.log('[InitDB] Seeding branch_facilities...');
+    const [dbBranches] = await connection.query('SELECT id, slug FROM branches');
+    const [dbFacilities] = await connection.query('SELECT id, name FROM facilities');
+
+    const barshiBranch = dbBranches.find(b => b.slug === 'barshi');
+    const shivajiNagarBranch = dbBranches.find(b => b.slug === 'shivaji-nagar');
+
+    if (barshiBranch && shivajiNagarBranch) {
+      // Barshi: Weight Training, Cardio Training, Steam Bath, Ice Bath
+      const barshiFacilities = ['Weight Training', 'Cardio Training', 'Steam Bath', 'Ice Bath'];
+      // Shivaji Nagar: Weight Training, Cardio Training
+      const shivajiNagarFacilities = ['Weight Training', 'Cardio Training'];
+
+      for (const fName of barshiFacilities) {
+        const fac = dbFacilities.find(f => f.name === fName);
+        if (fac) {
+          await connection.query('INSERT INTO branch_facilities (branch_id, facility_id) VALUES (?, ?)', [barshiBranch.id, fac.id]);
+        }
+      }
+
+      for (const fName of shivajiNagarFacilities) {
+        const fac = dbFacilities.find(f => f.name === fName);
+        if (fac) {
+          await connection.query('INSERT INTO branch_facilities (branch_id, facility_id) VALUES (?, ?)', [shivajiNagarBranch.id, fac.id]);
+        }
+      }
+    }
+
+    // Seed Gallery
+    console.log('[InitDB] Seeding gallery...');
+    const galleryItems = [
+      ['Therapeutic Steam Bath', 'Separate luxury steam bath suite for recovery and relaxation.', 'facilities_steam', 'Recovery'],
+      ['Contrast Therapy Ice Bath', 'Separate professional ice bath plunge for muscle recovery.', 'facilities_recovery', 'Recovery'],
+      ['Cardio Conditioning Treadmills', 'Professional treadmills for cardiovascular endurance training.', 'gym_photo_1', 'Equipment'],
+      ['Selectorized Strength Row', 'Row of commercial resistance stack strength machines.', 'gym_photo_2', 'Equipment'],
+      ['Upper Body Chest Press Machine', 'Pin-selected chest press machine for upper body development.', 'gym_photo_3', 'Equipment'],
+      ['Leg Conditioning Station', 'Leg extension conditioning machine for quad isolate training.', 'gym_photo_4', 'Equipment'],
+      ['Dumbbells & Cable Crossover Area', 'Dumbbells station and multi-angle cable crossover pulley setup.', 'gym_photo_5', 'Equipment'],
+      ['Heavy Squat Platform', 'Power cage platform for strength compound squats.', 'gym_photo_6', 'Training'],
+      ['Linear Plate-Loaded Leg Press', 'Plate-loaded leg press sled for high-capacity lower body training.', 'gym_photo_7', 'Equipment'],
+      ['Elite Free Weights Dumbbells Rack', 'Multiple tiers of professional-grade training dumbbells.', 'gym_photo_8', 'Equipment'],
+      ['Strength Benches', 'Flat and incline bench press setups for strength training.', 'gym_photo_9', 'Equipment'],
+      ['Flagship Squat Cage Setup', 'Heavy-duty power squat cage setup.', 'gym_photo_10', 'Equipment']
+    ];
+    for (const item of galleryItems) {
+      await connection.query('INSERT INTO gallery (title, description, image_url, category) VALUES (?, ?, ?, ?)', item);
+    }
+
+    // Seed Branch Gallery
+    console.log('[InitDB] Seeding branch_gallery...');
+    const [dbGallery] = await connection.query('SELECT id, image_url FROM gallery');
+    if (barshiBranch && shivajiNagarBranch) {
+      // Both branch galleries are populated dynamically via folder scanning
+      const barshiGallery = [];
+      const shivajiNagarGallery = [];
+
+      for (const imgKey of barshiGallery) {
+        const galItem = dbGallery.find(g => g.image_url === imgKey);
+        if (galItem) {
+          await connection.query('INSERT INTO branch_gallery (branch_id, gallery_id) VALUES (?, ?)', [barshiBranch.id, galItem.id]);
+        }
+      }
+
+      for (const imgKey of shivajiNagarGallery) {
+        const galItem = dbGallery.find(g => g.image_url === imgKey);
+        if (galItem) {
+          await connection.query('INSERT INTO branch_gallery (branch_id, gallery_id) VALUES (?, ?)', [shivajiNagarBranch.id, galItem.id]);
+        }
+      }
     }
 
     // Seed Memberships
@@ -195,7 +303,7 @@ async function initDatabase() {
         JSON.stringify([
           'Full Gym Floor Access',
           'Cardio & Strength Zones',
-          'Locker room & Shower access',
+          'Locker Room & Shower Access',
           'General Trainer Assistance'
         ]), 
         false
@@ -206,11 +314,10 @@ async function initDatabase() {
         '6 Months', 
         JSON.stringify([
           'Access to all training facilities',
-          'Locker room & steam bath access',
-          'Personalized Workout Plan',
-          'Biometric assessment check'
+          'Locker Room & Steam Bath Access',
+          'Personalized Workout Plan'
         ]), 
-        true
+        false
       ],
       [
         '12 Months', 
@@ -219,9 +326,7 @@ async function initDatabase() {
         JSON.stringify([
           'Unlimited 1-year access',
           'Full facility access (All Zones)',
-          'Complimentary locker & steam bath',
-          'Advanced biometric assessment',
-          'Free customized diet counseling'
+          'Complimentary Locker & Steam Bath'
         ]), 
         false
       ]
@@ -257,25 +362,11 @@ async function initDatabase() {
     // Seed Testimonials
     console.log('[InitDB] Seeding testimonials...');
     const testimonials = [
-      ['Rohan Sharma', 5, 'PML Gym has completely changed my perspective on fitness. The state-of-the-art equipment and the Recovery Lab are world-class.', '6 Months', 'trainer_1'],
-      ['Ananya Patel', 5, 'The coaches here are highly professional. The VIP package is worth every penny—I feel like a professional athlete utilizing the recovery zone.', '12 Months', 'trainer_2']
+      ['Rohan Sharma', 5, 'PML GYM has great equipment and the recovery facilities are clean and well-maintained.', '6 Months', 'trainer_1'],
+      ['Ananya Patel', 5, 'Highly professional environment. The conditioning setups are top tier and contrast therapy really helps after a hard session.', '12 Months', 'trainer_2']
     ];
     for (const testimonial of testimonials) {
       await connection.query('INSERT INTO testimonials (member_name, rating, review, membership_type, image_url) VALUES (?, ?, ?, ?, ?)', testimonial);
-    }
-
-    // Seed Gallery
-    console.log('[InitDB] Seeding gallery...');
-    const galleryItems = [
-      ['Strength Training Floor', 'High-performance strength training zone.', 'facilities_gym', 'Equipment'],
-      ['Cardio Zone Overhead', 'Biometric cardio area.', 'facilities_cardio', 'Equipment'],
-      ['Ice Bath', 'Premium cold plunge therapy designed to reduce inflammation, accelerate muscle recovery, improve circulation, and enhance athletic performance.', 'facilities_recovery', 'Recovery'],
-      ['Steam Bath', 'Relax and recover in our premium steam bath designed to improve circulation, reduce muscle tension, detoxify the body, and enhance post-workout recovery.', 'facilities_steam', 'Recovery'],
-      ['Dynamic Yoga Session', 'Guided mobility and yoga studio.', 'gallery_1', 'Classes'],
-      ['Premium Dumbbell Array', 'Heavy-duty dumbbell racks.', 'gallery_2', 'Equipment']
-    ];
-    for (const item of galleryItems) {
-      await connection.query('INSERT INTO gallery (title, description, image_url, category) VALUES (?, ?, ?, ?)', item);
     }
 
     console.log('[InitDB] Database initialization and seeding completed successfully!');

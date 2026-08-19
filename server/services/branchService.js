@@ -8,6 +8,10 @@ class BranchService {
   async getBranchById(id) {
     return await branchRepository.findById(id);
   }
+
+  async getBranchBySlug(slug) {
+    return await branchRepository.findBySlug(slug);
+  }
 }
 
 module.exports = new BranchService();

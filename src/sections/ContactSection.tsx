@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { GlassCard } from '../ui/GlassCard';
 import { Button } from '../ui/Button';
 import siteConfig from '../config/siteConfig';
 
 export const ContactSection: React.FC = () => {
+  const location = useLocation();
+  const state = location.state as { subject?: string; message?: string } | null;
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    subject: '',
-    message: ''
+    subject: state?.subject || '',
+    message: state?.message || ''
   });
   
   const [loading, setLoading] = useState(false);
@@ -36,7 +40,7 @@ export const ContactSection: React.FC = () => {
       if (response.ok && result.success) {
         setAlert({ 
           type: 'success', 
-          text: result.message || 'Thank you! Your enquiry has been received successfully. Our team will contact you shortly.' 
+          text: 'Thank you! Your enquiry has been received successfully. Our team will contact you shortly.' 
         });
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -64,9 +68,9 @@ export const ContactSection: React.FC = () => {
             <span style={{ color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px' }}>
               GET IN TOUCH
             </span>
-            <h2 style={{ fontSize: '2.2rem' }}>Connect With Our Concierge</h2>
+            <h2 style={{ fontSize: '2.2rem' }}>Contact Our Team</h2>
             <p style={{ lineHeight: '1.6' }}>
-              Whether you are looking to request a guest pass, arrange a private tour, or inquire about executive memberships, our concierge is here to assist.
+              Whether you are looking to inquire about our membership options, arrange a visit, or have questions about our facilities, our team is here to assist.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '10px' }}>
               <div>
@@ -78,8 +82,8 @@ export const ContactSection: React.FC = () => {
                   <a href="tel:+918668523713" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: '600', transition: 'var(--transition-smooth)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}>
                     +91 86685 23713
                   </a>
-                  <a href="tel:+919579698009" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: '600', transition: 'var(--transition-smooth)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}>
-                    +91 95796 98009
+                  <a href="tel:+919579680009" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: '600', transition: 'var(--transition-smooth)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}>
+                    +91 95796 80009
                   </a>
                 </div>
               </div>
@@ -103,7 +107,7 @@ export const ContactSection: React.FC = () => {
               <div>
                 <strong style={{ color: 'var(--color-text-white)', display: 'block', fontSize: '0.95rem', marginBottom: '6px' }}>Working Hours</strong>
                 <p style={{ fontSize: '0.95rem', color: 'var(--color-text-muted)', lineHeight: '1.4' }}>
-                  <strong>Open 7 Days a Week</strong> (Monday – Sunday)<br />
+                  Monday – Sunday<br />
                   Morning: 5:00 AM – 10:00 AM<br />
                   Evening: 5:00 PM – 10:00 PM
                 </p>
@@ -114,13 +118,18 @@ export const ContactSection: React.FC = () => {
                   <div>
                     <span style={{ color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '2px' }}>PML GYM – Barshi Branch</span>
                     <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', lineHeight: '1.4' }}>
-                      Paranda Road, Gadegaon Road, Barshi – 413401, Solapur District, Maharashtra, India
+                      Paranda Road, Gadegaon Road,<br />
+                      Barshi – 413401,<br />
+                      Maharashtra
                     </p>
                   </div>
                   <div>
                     <span style={{ color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '2px' }}>PML GYM – Shivaji Nagar Branch</span>
                     <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', lineHeight: '1.4' }}>
-                      College Road, Opposite Bank of Maharashtra, Near Shri Shivaji Mahavidyalaya, Shivaji Nagar, Barshi, Solapur District, Maharashtra, India
+                      Shri Shivaji Mahavidyalaya College Road,<br />
+                      opposite Bank of Maharashtra,<br />
+                      Shivaji Nagar, Barshi,<br />
+                      Maharashtra
                     </p>
                   </div>
                 </div>

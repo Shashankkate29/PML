@@ -10,10 +10,8 @@ export const Navbar: React.FC = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Branches', path: '/branches' },
-    { name: 'Facilities', path: '/facilities' },
     { name: 'Trainers', path: '/trainers' },
-    { name: 'Membership', path: '/membership' },
-    { name: 'Recovery Zone', path: '/recovery' },
+    { name: 'Recovery Zone', path: '/recovery-zone' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Contact', path: '/contact' }
   ];

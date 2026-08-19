@@ -1,10 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { GlassCard } from '../ui/GlassCard';
-import { imageMap } from '../assets/config/images';
+import { resolveImageUrl } from '../assets/config/images';
 
 interface Branch {
   id: number;
+  branchNumber?: number;
+  branch_number?: number;
   name: string;
+  shortName?: string;
+  short_name?: string;
+  slug?: string;
   address: string;
   phone: string;
   email: string;
@@ -17,7 +23,7 @@ interface BranchCardProps {
 }
 
 export const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
-  const resolvedImage = imageMap[branch.image_url] || imageMap['facilities_gym'];
+  const resolvedImage = resolveImageUrl(branch.image_url);
 
   return (
     <GlassCard 
@@ -59,7 +65,7 @@ export const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
             letterSpacing: '1px',
             border: '1px solid var(--border-glass)'
           }}>
-            {branch.id === 1 ? 'BRANCH 1' : 'BRANCH 2'}
+            {`BRANCH ${branch.branchNumber || branch.branch_number || (branch.id === 1 ? 1 : 2)}`}
           </div>
         </div>
         <h3 style={{ marginBottom: '8px', fontSize: '1.4rem' }}>{branch.name}</h3>
@@ -127,6 +133,20 @@ export const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
             </a>
           </div>
         </div>
+        
+        <Link 
+          to={`/branches/${branch.slug || (branch.id === 1 ? 'barshi' : 'shivaji-nagar')}`}
+          className="btn-primary"
+          style={{ 
+            textAlign: 'center', 
+            textDecoration: 'none', 
+            display: 'block',
+            width: '100%',
+            boxSizing: 'border-box'
+          }}
+        >
+          Visit Branch
+        </Link>
       </div>
     </GlassCard>
   );

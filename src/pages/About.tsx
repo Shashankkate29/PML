@@ -5,24 +5,24 @@ import { GlassCard } from '../ui/GlassCard';
 
 export const About: React.FC = () => {
   const values = [
-    { title: 'Uncompromising Standards', desc: 'Every barbell, recovery tub, and coaching protocol is vetted to meet professional athletic specifications.' },
-    { title: 'Scientific Foundations', desc: 'We utilize biomechanics assessments and physiological research to guide conditioning and recovery programs.' },
-    { title: 'Integrated Wellness', desc: 'Performance is nothing without restoration. We unite training and recovery labs under one roof.' }
+    { title: 'High Standards', desc: 'Every barbell, recovery tub, and coaching protocol is selected to meet high quality standards.' },
+    { title: 'Structured Approach', desc: 'We provide structured workout routines and expert guidance to help members reach their conditioning and recovery goals.' },
+    { title: 'Integrated Training', desc: 'We unite functional strength training and recovery areas under one roof.' }
   ];
 
   return (
     <>
       <SEO 
         title="About Us" 
-        description="Learn about the heritage, mission, and scientific principles behind PML GYM's training and recovery systems."
+        description="Learn about the heritage, mission, and principles behind PML GYM's training and recovery systems."
         canonicalPath="/about"
       />
       
-      <div style={{ padding: 'clamp(6rem, 10vw, 10rem) clamp(1rem, 5vw, 4rem) clamp(3rem, 5vw, 5rem)', backgroundColor: 'var(--color-bg-deep)', textAlign: 'center' }}>
+      <div style={{ padding: 'clamp(8rem, 12vw, 12rem) clamp(1rem, 5vw, 4rem) clamp(3rem, 5vw, 5rem)', backgroundColor: 'var(--color-bg-deep)', textAlign: 'center' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h1 style={{ fontSize: '3rem', marginBottom: '16px', fontFamily: 'var(--font-display)' }}>Our Philosophy</h1>
           <p style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--color-text-muted)', fontSize: '1.1rem', lineHeight: '1.6' }}>
-            Building resilient bodies and sharp minds through balanced training and clinical-grade recovery.
+            Building resilient bodies and sharp minds through balanced training and dedicated post-workout recovery.
           </p>
         </div>
       </div>

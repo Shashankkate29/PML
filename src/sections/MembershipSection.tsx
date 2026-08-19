@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFetch } from '../common/hooks/useFetch';
 import { MembershipCard } from '../cards/MembershipCard';
 import { Loader } from '../ui/Loader';
@@ -12,7 +13,7 @@ const fallbackMemberships = [
     features: [
       'Full Gym Floor Access',
       'Cardio & Strength Zones',
-      'Locker room & Shower access',
+      'Locker Room & Shower Access',
       'General Trainer Assistance'
     ],
     popular: false
@@ -24,11 +25,10 @@ const fallbackMemberships = [
     billing_period: '6 Months',
     features: [
       'Access to all training facilities',
-      'Locker room & steam bath access',
-      'Personalized Workout Plan',
-      'Biometric assessment check'
+      'Locker Room & Steam Bath Access',
+      'Personalized Workout Plan'
     ],
-    popular: true
+    popular: false
   },
   {
     id: 3,
@@ -38,16 +38,19 @@ const fallbackMemberships = [
     features: [
       'Unlimited 1-year access',
       'Full facility access (All Zones)',
-      'Complimentary locker & steam bath',
-      'Advanced biometric assessment',
-      'Free customized diet counseling'
+      'Complimentary Locker & Steam Bath'
     ],
     popular: false
   }
 ];
 
-export const MembershipSection: React.FC = () => {
+interface MembershipSectionProps {
+  onEnquireClick?: () => void;
+}
+
+export const MembershipSection: React.FC<MembershipSectionProps> = ({ onEnquireClick }) => {
   const { data: memberships, loading } = useFetch('/memberships', fallbackMemberships);
+  const navigate = useNavigate();
 
   return (
     <section className="section-padding" style={{ backgroundColor: 'var(--color-bg-deep)' }}>
@@ -68,13 +71,20 @@ export const MembershipSection: React.FC = () => {
                 <MembershipCard 
                   key={membership.id} 
                   membership={membership} 
+                  onEnquireClick={onEnquireClick}
                 />
               ))}
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+              <p style={{ fontSize: '0.88rem', color: 'var(--color-text-dim)', fontStyle: 'italic' }}>
+                * Additional charges may apply for premium recovery therapies and chargeable services. Enquire for details.
+              </p>
             </div>
             
             <div style={{ 
               textAlign: 'center', 
-              marginTop: '50px',
+              marginTop: '40px',
               padding: '30px 20px',
               borderTop: '1px solid var(--border-glass)',
               animation: 'fadeIn 0.8s ease-out'
@@ -86,7 +96,7 @@ export const MembershipSection: React.FC = () => {
                 color: 'var(--color-primary)',
                 marginBottom: '8px' 
               }}>
-                Need a customized package?
+                Need a custom plan?
               </h4>
               <p style={{ 
                 fontSize: '0.95rem', 
@@ -96,6 +106,13 @@ export const MembershipSection: React.FC = () => {
               }}>
                 Contact us or send an enquiry for personalized membership plans.
               </p>
+              <button 
+                onClick={onEnquireClick || (() => navigate('/contact'))} 
+                className="btn-primary" 
+                style={{ padding: '8px 24px', fontSize: '0.9rem', border: 'none', cursor: 'pointer', marginTop: '16px' }}
+              >
+                Enquire Now
+              </button>
             </div>
           </>
         )}

@@ -47,14 +47,14 @@ export const AboutSection: React.FC = () => {
         {/* Right Column: Narrative content */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <span style={{ color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px' }}>
-            ABOUT THE HERITAGE
+            ABOUT THE BRAND
           </span>
-          <h2 style={{ fontSize: '2.2rem' }}>A New Benchmark For Elite Conditioning</h2>
+          <h2 style={{ fontSize: '2.2rem' }}>A New Standard For Strength & Fitness</h2>
           <p style={{ lineHeight: '1.7' }}>
-            Founded on the pillars of scientific biofeedback and modern sports recovery, {siteConfig.gymName} was built to provide an uncompromising environment for athletes and high performers. 
+            PML GYM — Perfect Management Longtime is dedicated to providing a premium environment for strength, fitness, and conditioning in Barshi.
           </p>
           <p style={{ lineHeight: '1.7' }}>
-            We believe that strength is only half the equation. True fitness requires intelligent recovery. By bringing state-of-the-art cold plunges, saunas, and elite trainers under one roof, we help you break plateaus and extend physical longevity.
+            We believe that consistency and structured coaching are the keys to long-term progress. By combining professional equipment, group classes, and recovery facilities like steam and ice baths, we help members achieve lasting fitness results.
           </p>
         </div>
       </div>

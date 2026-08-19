@@ -6,13 +6,15 @@ interface SEOProps {
   description?: string;
   canonicalPath?: string;
   type?: string;
+  customSchema?: object;
 }
 
 export const SEO: React.FC<SEOProps> = ({
   title,
   description,
   canonicalPath = '',
-  type = 'website'
+  type = 'website',
+  customSchema
 }) => {
   const currentTitle = title ? `${title} | ${siteConfig.gymName}` : siteConfig.seoDefaults.title;
   const currentDescription = description || siteConfig.seoDefaults.description;
@@ -91,7 +93,7 @@ export const SEO: React.FC<SEOProps> = ({
         '@context': 'https://schema.org',
         '@type': 'ExerciseGym',
         '@id': `${siteUrl}/#barshi`,
-        'name': `${siteConfig.gymName} – Barshi Branch`,
+        'name': 'PML GYM – Barshi Branch',
         'url': siteUrl,
         'description': siteConfig.tagline,
         'telephone': '+91 91307 65750',
@@ -120,16 +122,14 @@ export const SEO: React.FC<SEOProps> = ({
         ],
         'sameAs': [
           siteConfig.socialLinks.instagram,
-          siteConfig.socialLinks.facebook,
-          siteConfig.socialLinks.twitter,
-          siteConfig.socialLinks.youtube
+          siteConfig.socialLinks.facebook
         ]
       },
       {
         '@context': 'https://schema.org',
         '@type': 'ExerciseGym',
         '@id': `${siteUrl}/#shivajinagar`,
-        'name': `${siteConfig.gymName} – Shivaji Nagar Branch`,
+        'name': 'PML GYM – Shivaji Nagar Branch',
         'url': siteUrl,
         'description': siteConfig.tagline,
         'telephone': '+91 86685 23713',
@@ -158,16 +158,18 @@ export const SEO: React.FC<SEOProps> = ({
         ],
         'sameAs': [
           siteConfig.socialLinks.instagram,
-          siteConfig.socialLinks.facebook,
-          siteConfig.socialLinks.twitter,
-          siteConfig.socialLinks.youtube
+          siteConfig.socialLinks.facebook
         ]
       }
     ];
 
-    scriptJsonLd.textContent = JSON.stringify(localBusinessSchema);
+    if (customSchema) {
+      scriptJsonLd.textContent = JSON.stringify(customSchema);
+    } else {
+      scriptJsonLd.textContent = JSON.stringify(localBusinessSchema);
+    }
 
-  }, [currentTitle, currentDescription, canonicalUrl, type, siteUrl]);
+  }, [currentTitle, currentDescription, canonicalUrl, type, siteUrl, customSchema]);
 
   return null;
 };

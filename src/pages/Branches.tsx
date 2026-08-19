@@ -7,21 +7,27 @@ import { Loader } from '../ui/Loader';
 const fallbackBranches = [
   {
     id: 1,
+    branchNumber: 1,
     name: 'PML GYM – Barshi Branch',
-    address: 'Paranda Road, Gadegaon Road, Barshi – 413401, Solapur District, Maharashtra, India',
+    shortName: 'Barshi',
+    slug: 'barshi',
+    address: 'Paranda Road, Gadegaon Road, Barshi – 413401, Maharashtra',
     phone: '+91 91307 65750',
     email: 'pmlfitnessandhelthclub7413@gmail.com',
-    operating_hours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM',
-    image_url: 'facilities_gym'
+    operating_hours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM (Sunday Open)',
+    image_url: 'branch1_photo_2'
   },
   {
     id: 2,
+    branchNumber: 2,
     name: 'PML GYM – Shivaji Nagar Branch',
-    address: 'College Road, Opposite Bank of Maharashtra, Near Shri Shivaji Mahavidyalaya, Shivaji Nagar, Barshi, Solapur District, Maharashtra, India',
+    shortName: 'Shivaji Nagar',
+    slug: 'shivaji-nagar',
+    address: 'Shri Shivaji Mahavidyalaya College Road, opposite Bank of Maharashtra, Shivaji Nagar, Barshi, Maharashtra',
     phone: '+91 86685 23713',
     email: 'pmlfitnessandhelthclub7413@gmail.com',
-    operating_hours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM',
-    image_url: 'facilities_cardio'
+    operating_hours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM (Sunday Open)',
+    image_url: 'branch2_photo_1'
   }
 ];
 
@@ -30,8 +36,8 @@ export const Branches: React.FC = () => {
 
   return (
     <>
-      <SEO 
-        title="Branches" 
+      <SEO
+        title="Branches"
         description="Find a PML GYM branch near you. Premium locations in Barshi (Paranda Road) and Shivaji Nagar offering luxury fitness equipment and recovery zones."
         canonicalPath="/branches"
       />

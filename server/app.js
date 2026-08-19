@@ -60,6 +60,7 @@ app.use('/api/v1', apiRouter);
 
 // Serve static assets in production or uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/photos', express.static(path.join(process.cwd(), "photo's")));
 
 // If we are in production, we serve the frontend index.html from dist
 if (process.env.NODE_ENV === 'production') {

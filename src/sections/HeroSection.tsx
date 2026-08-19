@@ -65,7 +65,7 @@ export const HeroSection: React.FC = () => {
           letterSpacing: '3px',
           textTransform: 'uppercase'
         }}>
-          WELCOME TO THE ELITE ARENA
+          WELCOME TO PML GYM
         </span>
         
         <h1 style={{ textShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
@@ -89,11 +89,11 @@ export const HeroSection: React.FC = () => {
           flexWrap: 'wrap',
           justifyContent: 'center'
         }}>
-          <NavLink to="/membership" className="btn-primary">
-            Explore Memberships
+          <NavLink to="/branches" className="btn-primary">
+            Explore Branches
           </NavLink>
           <NavLink to="/contact" className="btn-secondary">
-            Request Guest Pass
+            Enquire Now
           </NavLink>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { GlassCard } from '../ui/GlassCard';
-import { imageMap } from '../assets/config/images';
+import { resolveImageUrl } from '../assets/config/images';
 
 interface Facility {
   id: number;
@@ -15,7 +15,7 @@ interface FacilityCardProps {
 }
 
 export const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
-  const resolvedImage = imageMap[facility.image_url] || imageMap['facilities_gym'];
+  const resolvedImage = resolveImageUrl(facility.image_url);
 
   return (
     <GlassCard hoverEffect={true} style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', padding: '0px', overflow: 'hidden' }}>
@@ -38,7 +38,20 @@ export const FacilityCard: React.FC<FacilityCardProps> = ({ facility }) => {
           alignItems: 'flex-end'
         }}>
           <div>
-            <h3 style={{ fontSize: '1.25rem' }}>{facility.name}</h3>
+            {facility.category && facility.category.toUpperCase() !== 'GENERAL' && (
+              <span style={{ 
+                color: 'var(--color-primary)', 
+                fontSize: '0.7rem', 
+                fontWeight: '700', 
+                textTransform: 'uppercase', 
+                letterSpacing: '1.5px', 
+                display: 'block', 
+                marginBottom: '6px' 
+              }}>
+                {facility.category}
+              </span>
+            )}
+            <h3 style={{ fontSize: '1.25rem', margin: 0 }}>{facility.name}</h3>
           </div>
         </div>
       </div>
