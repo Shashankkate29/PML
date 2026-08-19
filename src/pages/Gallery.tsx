@@ -18,15 +18,9 @@ export const Gallery: React.FC = () => {
 
   const categories = ['All', 'Equipment', 'Training', 'Recovery'];
 
-  const filteredItems = (filter === 'All'
+  const filteredItems = filter === 'All'
     ? items
-    : items.filter(item => item.category === filter)
-  ).filter(item => 
-    !item.image_url.startsWith('branch1_') && 
-    !item.image_url.startsWith('branch2_') && 
-    !item.image_url.includes('/branch1/') && 
-    !item.image_url.includes('/branch2/')
-  );
+    : items.filter(item => item.category === filter);
 
   return (
     <>
