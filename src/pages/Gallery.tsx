@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/SEO';
 import { useFetch } from '../common/hooks/useFetch';
-import { imageMap } from '../assets/config/images';
+import { resolveImageUrl } from '../assets/config/images';
 import { Loader } from '../ui/Loader';
 import { GlassCard } from '../ui/GlassCard';
 
@@ -75,11 +75,7 @@ export const Gallery: React.FC = () => {
               gap: '24px'
             }}>
               {filteredItems.map((item) => {
-                const imgSource = item.image_url.startsWith('http')
-                  ? item.image_url
-                  : (item.image_url.startsWith('/') 
-                      ? 'http://localhost:5000' + item.image_url 
-                      : (imageMap[item.image_url] || imageMap['facilities_gym']));
+                const imgSource = resolveImageUrl(item.image_url);
                 return (
                   <GlassCard key={item.id} hoverEffect={true} style={{ padding: '0px', overflow: 'hidden', height: '280px' }}>
                     <img 
