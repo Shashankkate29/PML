@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginTop: '2px', color: 'var(--color-text-muted)' }}>
                 <span>+91 91307 65750</span>
                 <span>+91 86685 23713</span>
-                <span>+91 95796 80009</span>
+                <span>+91 95796 98009</span>
               </div>
             </li>
             <li>

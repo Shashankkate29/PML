@@ -83,8 +83,8 @@ export const ContactSection: React.FC = () => {
                   <a href="tel:+918668523713" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: '600', transition: 'var(--transition-smooth)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}>
                     +91 86685 23713
                   </a>
-                  <a href="tel:+919579680009" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: '600', transition: 'var(--transition-smooth)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}>
-                    +91 95796 80009
+                  <a href="tel:+919579698009" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: '600', transition: 'var(--transition-smooth)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}>
+                    +91 95796 98009
                   </a>
                 </div>
               </div>
