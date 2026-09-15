@@ -9,7 +9,6 @@ import { GlassCard } from '../ui/GlassCard';
 import { Loader } from '../ui/Loader';
 import { imageMap, resolveImageUrl } from '../assets/config/images';
 import NotFound from './NotFound';
-import { MembershipSection } from '../sections/MembershipSection';
 
 interface BranchDbResponse {
   id: number;
@@ -65,9 +64,14 @@ export const BranchDetails: React.FC = () => {
   const description = dbBranch?.description || fallbackConfig.description;
   const operatingHours = dbBranch?.operating_hours || fallbackConfig.workingHours;
   const email = dbBranch?.email || fallbackConfig.email;
-  const mapUrl = dbBranch?.map_url !== undefined ? dbBranch.map_url : fallbackConfig.mapUrl;
+  const mapUrl = dbBranch?.map_url || fallbackConfig.mapUrl || (slug === 'barshi' ? 'https://share.google/R1vC0byDdp3Bm7nwC' : 'https://share.google/FdrSW79SbNBIwvMmS');
   const mainImageKey = dbBranch?.image_url || fallbackConfig.image;
   const resolvedMainImage = imageMap[mainImageKey] || imageMap['facilities_gym'];
+
+  const whatsappMessage = slug === 'barshi'
+    ? 'Hello PML GYM, I would like to enquire about the Barshi Branch.'
+    : 'Hello PML GYM, I would like to enquire about the Shivaji Nagar Branch.';
+  const whatsappUrl = `https://wa.me/918668987413?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Centralized phone list resolution
   const phoneList = fallbackConfig.phoneNumbers;
@@ -128,16 +132,6 @@ export const BranchDetails: React.FC = () => {
       image_url: imgKey
     }));
   })();
-
-  // Handle CTA redirection to Contact page passing state subject
-  const handleEnquireClick = () => {
-    navigate('/contact', { 
-      state: { 
-        subject: `Enquiry: ${branchName}`,
-        message: `Hello PML GYM team, I would like to enquire about the membership programs and facilities at the ${branchName}.`
-      } 
-    });
-  };
 
   // Build unique dynamic schema.org LocalBusiness JSON-LD
   const currentUrl = window.location.href;
@@ -264,29 +258,29 @@ export const BranchDetails: React.FC = () => {
               <div style={{ 
                 display: 'flex', 
                 flexWrap: 'wrap', 
-                gap: '24px', 
+                gap: '16px', 
                 borderTop: '1px solid var(--border-glass)', 
                 paddingTop: '20px', 
                 marginTop: '8px' 
               }}>
-                <button 
-                  onClick={handleEnquireClick} 
+                <a 
+                  href={whatsappUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
                   className="btn-primary" 
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer', border: 'none' }}
+                  style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                 >
-                  Enquire Now
-                </button>
-                {mapUrl && (
-                  <a 
-                    href={mapUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="btn-secondary" 
-                    style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                  >
-                    Get Directions
-                  </a>
-                )}
+                  Enquire on WhatsApp
+                </a>
+                <a 
+                  href={mapUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-secondary" 
+                  style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                >
+                  View Location
+                </a>
               </div>
             </GlassCard>
           </div>
@@ -359,6 +353,45 @@ export const BranchDetails: React.FC = () => {
                       onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}
                     >
                       {email}
+                    </a>
+                  </div>
+                </div>
+
+                <div style={{ 
+                  borderTop: '1px solid var(--border-glass)', 
+                  paddingTop: '16px', 
+                  marginTop: '8px', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '12px' 
+                }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: '700', letterSpacing: '1.5px', color: 'var(--color-primary)', textTransform: 'uppercase' }}>
+                    LOCATION
+                  </span>
+                  <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--color-text-white)', fontWeight: '600' }}>
+                    {branchName}
+                  </p>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--color-text-muted)', lineHeight: '1.5' }}>
+                    {address}
+                  </p>
+                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '4px' }}>
+                    <a 
+                      href={mapUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn-secondary" 
+                      style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 18px', fontSize: '0.88rem' }}
+                    >
+                      View Location
+                    </a>
+                    <a 
+                      href={whatsappUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn-primary" 
+                      style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 18px', fontSize: '0.88rem' }}
+                    >
+                      Enquire on WhatsApp
                     </a>
                   </div>
                 </div>
@@ -451,17 +484,6 @@ export const BranchDetails: React.FC = () => {
                 <FacilityCard key={fac.id} facility={fac} />
               ))}
             </div>
-          </div>
-
-          {/* Membership Plans Section */}
-          <div style={{ marginBottom: '60px', borderTop: '1px solid var(--border-glass)', paddingTop: '40px' }}>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <h2 style={{ fontSize: '2rem', margin: 0 }}>Membership Plans</h2>
-              <p style={{ margin: '8px 0 0 0', color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>
-                Official branch pricing structures tailored to your training requirements.
-              </p>
-            </div>
-            <MembershipSection onEnquireClick={handleEnquireClick} />
           </div>
 
           {/* Branch Gallery */}
@@ -559,13 +581,15 @@ export const BranchDetails: React.FC = () => {
             }}>
               Take the first step toward your strength and recovery goals. Our team is ready to welcome you.
             </p>
-            <button 
-              onClick={handleEnquireClick} 
+            <a 
+              href={whatsappUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
               className="btn-primary" 
-              style={{ padding: '12px 36px', fontSize: '1rem', border: 'none', cursor: 'pointer' }}
+              style={{ padding: '12px 36px', fontSize: '1rem', textDecoration: 'none', display: 'inline-block' }}
             >
-              Enquire Now
-            </button>
+              Enquire on WhatsApp
+            </a>
           </div>
 
         </div>

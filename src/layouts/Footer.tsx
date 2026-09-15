@@ -76,6 +76,21 @@ export const Footer: React.FC = () => {
               </div>
             </li>
             <li>
+              <strong style={{ color: 'var(--color-text-white)' }}>WhatsApp: </strong>
+              <div style={{ marginTop: '2px' }}>
+                <a 
+                  href="https://wa.me/918668987413?text=Hello%20PML%20GYM%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20gym." 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{ color: 'var(--color-primary)', textDecoration: 'none' }}
+                  onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text-white)'} 
+                  onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-primary)'}
+                >
+                  +91 86689 87413
+                </a>
+              </div>
+            </li>
+            <li>
               <strong style={{ color: 'var(--color-text-white)' }}>Email: </strong>
               <a href={`mailto:pmlfitnessandhelthclub7413@gmail.com`} style={{ color: 'var(--color-text-muted)' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-primary)'} onMouseOut={(e) => e.currentTarget.style.color = ''}>
                 pmlfitnessandhelthclub7413@gmail.com

@@ -14,7 +14,7 @@ export const RecoveryZone: React.FC = () => {
       image: imageMap['facilities_recovery'],
       category: 'Contrast Therapy',
       desc: 'Recover with our professional cold plunge pool. Designed to support muscle relief, reduce post-workout soreness, improve circulation, and speed up training recovery.',
-      details: 'Included in Barshi Branch Membership.',
+      details: 'Available at Barshi Branch.',
       ctaText: 'Enquire About Access',
       subject: 'Ice Bath Contrast Therapy Enquiry',
       message: 'I would like to enquire about Ice Bath contrast therapy protocols, access schedules, and availability.'
@@ -24,7 +24,7 @@ export const RecoveryZone: React.FC = () => {
       image: imageMap['facilities_steam'],
       category: 'Thermal Therapy',
       desc: 'Relax and unwind in our premium steam suite. Ideal for releasing muscle tension, promoting relaxation, and supporting recovery after a heavy training session.',
-      details: 'Included in Barshi Branch Membership.',
+      details: 'Available at Barshi Branch.',
       ctaText: 'Enquire About Access',
       subject: 'Steam Bath Recovery Enquiry',
       message: 'I would like to enquire about Steam Bath facility hours, contrast therapy benefits, and availability.'

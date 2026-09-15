@@ -92,9 +92,15 @@ export const HeroSection: React.FC = () => {
           <NavLink to="/branches" className="btn-primary">
             Explore Branches
           </NavLink>
-          <NavLink to="/contact" className="btn-secondary">
-            Enquire Now
-          </NavLink>
+          <a 
+            href="https://wa.me/918668987413?text=Hello%20PML%20GYM%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20gym." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn-secondary"
+            style={{ textDecoration: 'none' }}
+          >
+            Enquire on WhatsApp
+          </a>
         </div>
       </div>
     </section>

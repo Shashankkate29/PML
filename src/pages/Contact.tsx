@@ -7,7 +7,7 @@ export const Contact: React.FC = () => {
     <>
       <SEO 
         title="Contact Us" 
-        description="Get in touch with PML GYM to learn more about our branches, check facilities, or inquire about memberships."
+        description="Get in touch with PML GYM to learn more about our branches, check facilities, or connect with our team."
         canonicalPath="/contact"
       />
       <div style={{ paddingTop: '40px', backgroundColor: 'var(--color-bg-deep)' }}>

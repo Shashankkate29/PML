@@ -16,6 +16,8 @@ interface Branch {
   email: string;
   operating_hours: string;
   image_url: string;
+  map_url?: string | null;
+  mapUrl?: string | null;
 }
 
 interface BranchCardProps {
@@ -24,6 +26,7 @@ interface BranchCardProps {
 
 export const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
   const resolvedImage = resolveImageUrl(branch.image_url);
+  const locationUrl = branch.map_url || branch.mapUrl || (branch.slug === 'barshi' || branch.id === 1 ? 'https://share.google/R1vC0byDdp3Bm7nwC' : 'https://share.google/FdrSW79SbNBIwvMmS');
 
   return (
     <GlassCard 
@@ -134,19 +137,38 @@ export const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
           </div>
         </div>
         
-        <Link 
-          to={`/branches/${branch.slug || (branch.id === 1 ? 'barshi' : 'shivaji-nagar')}`}
-          className="btn-primary"
-          style={{ 
-            textAlign: 'center', 
-            textDecoration: 'none', 
-            display: 'block',
-            width: '100%',
-            boxSizing: 'border-box'
-          }}
-        >
-          Visit Branch
-        </Link>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '6px' }}>
+          <Link 
+            to={`/branches/${branch.slug || (branch.id === 1 ? 'barshi' : 'shivaji-nagar')}`}
+            className="btn-primary"
+            style={{ 
+              textAlign: 'center', 
+              textDecoration: 'none', 
+              flex: '1 1 130px',
+              boxSizing: 'border-box',
+              padding: '10px 16px',
+              fontSize: '0.9rem'
+            }}
+          >
+            Visit Branch
+          </Link>
+          <a 
+            href={locationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary"
+            style={{ 
+              textAlign: 'center', 
+              textDecoration: 'none', 
+              flex: '1 1 130px',
+              boxSizing: 'border-box',
+              padding: '10px 16px',
+              fontSize: '0.9rem'
+            }}
+          >
+            View Location
+          </a>
+        </div>
       </div>
     </GlassCard>
   );

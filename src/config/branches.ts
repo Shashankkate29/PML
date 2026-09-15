@@ -76,7 +76,7 @@ export const branchesConfig: BranchConfig[] = [
       'branch1_photo_6',
       'branch1_photo_7'
     ],
-    mapUrl: null, // Left empty to prevent coordinate fabrication
+    mapUrl: 'https://share.google/R1vC0byDdp3Bm7nwC',
     image: 'branch1_photo_2'
   },
   {
@@ -128,7 +128,7 @@ export const branchesConfig: BranchConfig[] = [
       'branch2_photo_9',
       'branch2_photo_10'
     ],
-    mapUrl: null, // Left empty to prevent coordinate fabrication
+    mapUrl: 'https://share.google/FdrSW79SbNBIwvMmS',
     image: 'branch2_photo_1'
   }
 ];

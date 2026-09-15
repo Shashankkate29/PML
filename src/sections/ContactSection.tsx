@@ -71,7 +71,7 @@ export const ContactSection: React.FC = () => {
             </span>
             <h2 style={{ fontSize: '2.2rem' }}>Contact Our Team</h2>
             <p style={{ lineHeight: '1.6' }}>
-              Whether you are looking to inquire about our membership options, arrange a visit, or have questions about our facilities, our team is here to assist.
+              Whether you are looking to enquire about our gym, arrange a visit, or have questions about our facilities, our team is here to assist.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '10px' }}>
               <div>

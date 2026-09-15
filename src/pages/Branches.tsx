@@ -15,7 +15,8 @@ const fallbackBranches = [
     phone: '+91 91307 65750',
     email: 'pmlfitnessandhelthclub7413@gmail.com',
     operating_hours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM (Sunday Open)',
-    image_url: 'branch1_photo_2'
+    image_url: 'branch1_photo_2',
+    map_url: 'https://share.google/R1vC0byDdp3Bm7nwC'
   },
   {
     id: 2,
@@ -27,7 +28,8 @@ const fallbackBranches = [
     phone: '+91 86685 23713',
     email: 'pmlfitnessandhelthclub7413@gmail.com',
     operating_hours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM (Sunday Open)',
-    image_url: 'branch2_photo_1'
+    image_url: 'branch2_photo_1',
+    map_url: 'https://share.google/FdrSW79SbNBIwvMmS'
   }
 ];
 

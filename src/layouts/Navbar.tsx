@@ -70,9 +70,15 @@ export const Navbar: React.FC = () => {
 
         {/* Action Button */}
         <div className="desktop-nav">
-          <NavLink to="/contact" className="btn-primary" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
+          <a 
+            href="https://wa.me/918668987413?text=Hello%20PML%20GYM%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20gym." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn-primary" 
+            style={{ padding: '8px 20px', fontSize: '0.9rem', textDecoration: 'none' }}
+          >
             Join Now
-          </NavLink>
+          </a>
         </div>
 
         {/* Mobile Toggle Button */}
@@ -126,9 +132,16 @@ export const Navbar: React.FC = () => {
               {link.name}
             </NavLink>
           ))}
-          <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)} className="btn-primary" style={{ marginTop: '20px' }}>
+          <a 
+            href="https://wa.me/918668987413?text=Hello%20PML%20GYM%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20gym." 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className="btn-primary" 
+            style={{ marginTop: '20px', textDecoration: 'none' }}
+          >
             Join Now
-          </NavLink>
+          </a>
         </div>
       )}
     </header>
