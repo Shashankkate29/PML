@@ -71,7 +71,7 @@ export const BranchDetails: React.FC = () => {
   const whatsappMessage = slug === 'barshi'
     ? 'Hello PML GYM, I would like to enquire about the Barshi Branch.'
     : 'Hello PML GYM, I would like to enquire about the Shivaji Nagar Branch.';
-  const whatsappUrl = `https://wa.me/918668987413?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappUrl = `https://wa.me/919699677413?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Centralized phone list resolution
   const phoneList = fallbackConfig.phoneNumbers;

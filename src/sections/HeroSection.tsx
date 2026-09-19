@@ -93,7 +93,7 @@ export const HeroSection: React.FC = () => {
             Explore Branches
           </NavLink>
           <a 
-            href="https://wa.me/918668987413?text=Hello%20PML%20GYM%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20gym." 
+            href="https://wa.me/919699677413?text=Hello%20PML%20GYM%2C%20I%20would%20like%20to%20enquire%20about%20joining%20the%20gym." 
             target="_blank" 
             rel="noopener noreferrer" 
             className="btn-secondary"

@@ -38,7 +38,7 @@ export const siteConfig: SiteConfig = {
   themeColorSecondary: '#111111', // Deep Luxury Black
   contact: {
     phone: '+91 91307 65750, +91 86685 23713, +91 95796 98009',
-    whatsapp: '+91 86689 87413',
+    whatsapp: '+91 96996 77413',
     email: 'pmlfitnessandhelthclub7413@gmail.com',
     address: 'Paranda Road, Gadegaon Road, Barshi – 413401, Maharashtra',
     operatingHours: 'Monday – Sunday | Morning: 5:00 AM – 10:00 AM | Evening: 5:00 PM – 10:00 PM'
